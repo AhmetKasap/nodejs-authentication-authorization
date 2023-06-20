@@ -4,9 +4,16 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 
+
+
+
+
 const signupGet = (req,res) => {
     res.render('signup')
 }
+
+
+
 
 const signupPost = (req,res) => {
     const username = req.body.username
@@ -30,20 +37,26 @@ const loginGet = (req,res) => {
 }
 
 
+
 const createToken = async (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET , {expiresIn:'1d'}) //* id ye göre 1 günlük token oluşturma
 }
 
+
+
+
 const logOut = async (req, res) => {
-    await res.clearCookie('jsonwebtoken');
-    await res.redirect('/login'); // veya başka bir sayfaya yönlendirme yapabilirsiniz
+    await res.clearCookie('jsonwebtoken');  //* token sıfırlama yani çıkış işlemi
+    await res.redirect('/login');  
 }
 
-const loginPost = async (req,res) => {
+
+
+const loginPost = async (req,res) => {  //* kulanıcı girişi 
     const username = req.body.username
     const userpassword = req.body.userpassword
 
-    const user = await User.findOne({ name: username }) //* tek bir eleman döndürür
+    const user = await User.findOne({ name: username }) 
     
     const isPasswordMatch  = await bcrypt.compare(userpassword, user.password)
     if (username && isPasswordMatch) {
@@ -52,6 +65,8 @@ const loginPost = async (req,res) => {
     else{
         console.log("giriş bilgileri hatalı")
     }
+
+
 
     
     const token = await createToken(user._id)

@@ -5,6 +5,7 @@ const getAdmin = (req,res) => {
 }
 
 
+
 module.exports = {
     getAdmin 
 }

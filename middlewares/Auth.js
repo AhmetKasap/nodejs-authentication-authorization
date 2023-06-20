@@ -3,6 +3,7 @@ require('dotenv').config()
 const User = require('../models/User')
 
 
+
 const authenticationToken = async (req,res,next) => {
     const token = req.cookies.jsonwebtoken   //* oluşturduğumuz token ı cookies den aldık
 
@@ -22,6 +23,8 @@ const authenticationToken = async (req,res,next) => {
 
 }
 
+
+
 const checkUser = async (req,res,next) => {
     const token = req.cookies.jsonwebtoken
 
@@ -34,10 +37,10 @@ const checkUser = async (req,res,next) => {
             }
             else {
                 const user = await User.findById(decodedToken.id)
+                console.log(user)
                 res.locals.user = user
                 next()
             }
-            
         })
     }
     else {
@@ -45,10 +48,7 @@ const checkUser = async (req,res,next) => {
         next()
     }
 
-    
-
 }
-
 
 
 
